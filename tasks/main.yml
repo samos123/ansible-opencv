@@ -1,13 +1,12 @@
 ---
+- name: Add PPA for libopencv-nonfree for SURF and SIFT features
+  apt_repository: repo='ppa:xqms/opencv-nonfree'
 - name: Install opencv dependencies
   apt: name={{ item }} update_cache=yes
   with_items:
-    - build-essential
     - ipython
     - python-dev
     - python-numpy
-    - cmake
-    - git
     - libgtk2.0-dev
     - pkg-config
     - libavcodec-dev
@@ -22,17 +21,10 @@
     - libtiff-dev
     - libjasper-dev
     - libdc1394-22-dev
-
-- file: path=/opt/opencv state=directory
-- file: path=/opt/opencv/build state=directory
-
-- name: Get opencv source code
-  shell: git clone https://github.com/Itseez/opencv.git src chdir=/opt/opencv creates=/opt/opencv/src
-
-- name: get opencv contrib source code
-  shell: git clone https://github.com/Itseez/opencv_contrib.git contrib chdir=/opt/opencv/src creates=/opt/opencv/src/contrib
-
-- shell: cmake -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv/src/contrib/modules /opt/opencv/src chdir=/opt/opencv/build creates=cmake_install.cmake
-- shell: make chdir=/opt/opencv/build creates=lib
-- shell: make install chdir=/opt/opencv/build creates=/usr/local/lib/libopencv_core.so
-
+    - libopencv-contrib-dev
+    - libopencv-core-dev
+    - libopencv-dev
+    - libopencv-features2d-dev
+    - libopencv-nonfree-dev
+    - libopencv-gpu-dev
+    - python-opencv
